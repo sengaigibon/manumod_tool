@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Country;
 use App\Entity\Manufacturer;
 use App\Entity\Models;
 use App\Entity\ModelsI18n;
@@ -22,7 +23,15 @@ class DashboardController extends AbstractDashboardController
         $url = $routeBuilder->setController(ManufacturerCrudController::class)->generateUrl();
 
         return $this->redirect($url);
+//        return parent::index();
     }
+//    public function admin(): Response
+//    {
+//
+//        return $this->render('admin/dashboard.html.twig', [
+//            'chart' => '',
+//        ]);
+//    }
 
     public function configureDashboard(): Dashboard
     {
@@ -37,5 +46,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Manufacturers', 'fa-solid fa-industry', Manufacturer::class);
         yield MenuItem::linkToCrud('Models', 'fa-solid fa-car-side', Models::class);
         yield MenuItem::linkToCrud('Models i18n', 'fa-solid fa-language', ModelsI18n::class);
+//        yield MenuItem::linkToCrud('Countries', 'fa-solid fa-flag-checkered', Country::class);
     }
 }

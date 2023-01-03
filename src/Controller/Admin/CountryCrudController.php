@@ -2,26 +2,25 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Models;
+use App\Entity\Country;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class ModelsCrudController extends AbstractCrudController
+class CountryCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Models::class;
+        return Country::class;
     }
 
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideWhenCreating(),
-            AssociationField::new('herst', 'Manufacturer'),
-            Field::new('name', 'Model Name'),
-            Field::new('ident_code', 'Identification Code'),
+            TextField::new('iso'),
+            TextField::new('name', 'Name'),
+            TextField::new('name_en', 'English Name'),
         ];
     }
 }

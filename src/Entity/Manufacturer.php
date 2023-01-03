@@ -43,7 +43,7 @@ class Manufacturer
 
     public function __toString(): string
     {
-        return $this->id . ' ' . $this->name;
+        return $this->name;
     }
 
     public function getId(): int

@@ -10,14 +10,16 @@ use Doctrine\ORM\Mapping as ORM;
 class ModelsI18n
 {
     #[ORM\Id]
-    #[ORM\Column]
-    private ?int $modelid = null;
+    #[ORM\Column(name: "modelid")]
+    private ?int $modelId = null;
 
-    #[ORM\Column]
-    private ?int $countryid = null;
+    #[ORM\ManyToOne(targetEntity: Country::class, inversedBy: 'id')]
+    #[ORM\JoinColumn(name: 'countryid', referencedColumnName: 'id')]
+    private Country|null $countryid = null;
 
-    #[ORM\Column]
-    private ?int $languageid = null;
+    #[ORM\ManyToOne(targetEntity: Language::class, inversedBy: 'id')]
+    #[ORM\JoinColumn(name: 'languageid', referencedColumnName: 'id')]
+    private Language|null $languageId = null;
 
     #[ORM\Column(length: 80)]
     private ?string $name = null;
@@ -27,36 +29,36 @@ class ModelsI18n
 
     public function getModelId(): ?int
     {
-        return $this->modelid;
+        return $this->modelId;
     }
 
     public function setModelId(int $modelId): self
     {
-        $this->modelid = $modelId;
+        $this->modelId = $modelId;
 
         return $this;
     }
 
-    public function getCountryId(): ?int
+    public function getCountryId(): ?Country
     {
         return $this->countryid;
     }
 
-    public function setCountryId(int $countryId): self
+    public function setCountryId(?Country $countryId): self
     {
-        $this->countryid = $countryd;
+        $this->countryid = $countryId;
 
         return $this;
     }
 
-    public function getLanguageId(): ?int
+    public function getLanguageId(): ?Language
     {
-        return $this->languageid;
+        return $this->languageId;
     }
 
-    public function setLanguageId(int $languageId): self
+    public function setLanguageId(?Language $languageId): self
     {
-        $this->languageid = $languageId;
+        $this->languageId = $languageId;
 
         return $this;
     }

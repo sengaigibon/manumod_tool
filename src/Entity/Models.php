@@ -14,8 +14,9 @@ class Models
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $herst = null;
+    #[ORM\ManyToOne(targetEntity: Manufacturer::class, inversedBy: 'id')]
+    #[ORM\JoinColumn(name: 'herst', referencedColumnName: 'id')]
+    private Manufacturer $herst;
 
     #[ORM\Column(length: 100)]
     private ?string $name = null;
@@ -23,19 +24,26 @@ class Models
     #[ORM\Column(length: 80)]
     private ?string $ident_code = null;
 
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getHerst(): ?int
+    public function getHerst(): ?Manufacturer
     {
         return $this->herst;
     }
 
-    public function setHerst(int $herst): self
+    public function setHerst(Manufacturer $manufacturer): self
     {
-        $this->herst = $herst;
+        $this->herst = $manufacturer;
 
         return $this;
     }
