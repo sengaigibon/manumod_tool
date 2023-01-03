@@ -1,0 +1,30 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}Dashboard{% endblock %}
+
+{% block page_actions %}
+    <a class="btn btn-primary" href="...">Model Relations</a>
+{% endblock %}
+
+{% block main %}
+    <div>
+        Manufacturers: {{ totalManufacturers }} <br>
+        Models: {{ totalModels }} <br>
+    </div>
+    {#    <table class="datagrid">#}
+    {#        <thead>#}
+    {#        <tr>#}
+    {#            <td>Some Column</td>#}
+    {#            <td>Another Column</td>#}
+    {#        </tr>#}
+    {#        </thead>#}
+    {#        <tbody>#}
+    {#        {% for data in myOwnData %}#}
+    {#            <tr>#}
+    {#                <td>{{ data.col1 }}</td>#}
+    {#                <td>{{ data.col2 }}</td>#}
+    {#            </tr>#}
+    {#        {% endfor %}#}
+    {#        </tbody>#}
+    {#    </table>#}
+{% endblock %}
