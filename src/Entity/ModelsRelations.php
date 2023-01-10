@@ -23,6 +23,12 @@ class ModelsRelations
     #[ORM\Column(name: 'modelName', length: 100)]
     private ?string $modelName = null;
 
+    #[ORM\Column(name: 'parentId')]
+    private int $parentId;
+
+    #[ORM\Column(name: 'childId')]
+    private int $childId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,5 +68,15 @@ class ModelsRelations
         $this->modelName = $modelName;
 
         return $this;
+    }
+
+    public function getParentId(): int
+    {
+        return $this->parentId;
+    }
+
+    public function getChildId(): int
+    {
+        return $this->childId;
     }
 }
