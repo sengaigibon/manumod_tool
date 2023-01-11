@@ -48,6 +48,16 @@ class Models
         return $this;
     }
 
+    public function getManufacturerId(): int
+    {
+        return $this->herst->getId();
+    }
+
+    public function getManufacturerName(): string
+    {
+        return $this->herst->getName();
+    }
+
     public function getName(): ?string
     {
         return $this->name;

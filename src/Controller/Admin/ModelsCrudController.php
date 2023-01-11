@@ -28,6 +28,9 @@ class ModelsCrudController extends AbstractCrudController
             function (Models $model): array {
                 return [
                     'modelId' => $model->getId(),
+                    'modelName' => $model->getName(),
+                    'manufacturerId' => $model->getManufacturerId(),
+                    'manufacturer' => $model->getManufacturerName(),
                 ];
             });
 

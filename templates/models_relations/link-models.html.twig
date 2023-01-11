@@ -1,29 +1,111 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
-{% block content_title %}Dashboard{% endblock %}
+{% block content_title %}Link Model to a Model Series{% endblock %}
 
 {% block page_actions %}
-    <a class="btn btn-primary" href="#">Model Relations</a>
+    <a id="btnSave" class="btn btn-primary" href="#">Save</a>
 {% endblock %}
 
 {% block main %}
+    {% set sort_field_name = app.request.get('sort')|keys|first %}
+    {% set sort_order = app.request.get('sort')|first %}
+    {% set has_footer = entities|length != 0 %}
+    {% set num_results = entities|length %}
+
+
     <div>
-        Model ID: {{ modelId }} <br>
+        Selected Model is: <br>
+        Manufacturer: {{ manufacturer }}<br>
+        ID: {{ modelId }} <br>
+        Name: {{ modelName }} <br>
     </div>
-    {#    <table class="datagrid">#}
-    {#        <thead>#}
-    {#        <tr>#}
-    {#            <td>Some Column</td>#}
-    {#            <td>Another Column</td>#}
-    {#        </tr>#}
-    {#        </thead>#}
-    {#        <tbody>#}
-    {#        {% for data in myOwnData %}#}
-    {#            <tr>#}
-    {#                <td>{{ data.col1 }}</td>#}
-    {#                <td>{{ data.col2 }}</td>#}
-    {#            </tr>#}
-    {#        {% endfor %}#}
-    {#        </tbody>#}
-    {#    </table>#}
+    <br><br>
+    Choose the new Parent for the selected Model: <br><br>
+
+    <table class="table datagrid {{ entities is empty ? 'datagrid-empty' }}">
+        <thead>
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td class="batch-actions-selector">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input form-batch-checkbox" value="{{ entity.id }}">
+                    </div>
+                </td>
+                <td>{{ entity.id }}</td>
+                <td>{{ entity.name }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{#    <table#}
+{#            id="table"#}
+{#            data-search="true"#}
+{#            data-show-columns="true"#}
+{#            data-click-to-select="true"#}
+{#            data-minimum-count-columns="2"#}
+{#            data-show-pagination-switch="true"#}
+{#            data-pagination="true"#}
+{#            data-id-field="id"#}
+{#            data-page-list="[10, 25, 50, 100, all]"#}
+{#            data-show-footer="true"#}
+{#            data-side-pagination="server"#}
+{#            data-url="{{ path('routePath', {action: 'records', entity: models}) }}">#}
+{#    </table>#}
+
+
+{#    <script src="{{ asset('/assets/bootstrap-datatable/bootstrap-table.js') }}"></script>#}
+{#    #}{#<script src="{{ asset('/assets/bootstrap-datatable/bootstrap-table.js') }}"></script>#}
+
+{#    <script>#}
+{#        $(document).ready(function() {#}
+{#            let $table = $('#table');#}
+
+{#            $table.bootstrapTable('destroy').bootstrapTable({#}
+{#                height: 550,#}
+{#                columns: []#}
+{#            })#}
+{#        });#}
+{#    </script>#}
+
+    <script src="{{ asset('/assets/js/jquery-3.6.3.min.js') }}"></script>
+    <script type="application/javascript">
+        $(document).ready(function() {
+
+            $('#btnSave').click(function() {
+
+                let length = $('.form-check-input:checkbox:checked').length;
+                if (length < 1) {
+                    //alert something
+                    console.log('smaller than 1');
+                } else if (length > 1) {
+                    //alert something
+                    console.log('greater than 1');
+                } else if ( length === 1) {
+                    console.log('equals to 1');
+
+                    let parentId = $('.form-check-input:checkbox:checked')[0].value;
+                    let url = "{{ path('app_models_set_relation', {'parentId': 'parentId', 'childId': modelId}) }}";
+                    url = url.replace("parentId", parentId);
+                    console.log(url);
+                    // personal note: one model must have only 1 parent, filter this for showing the action to ink a model to a parent
+                    $.ajax({
+                        method: "POST",
+                        url: url
+                    }).done(function() {
+                        console.log('success');
+                    }).fail(function() {
+                        console.log('error');
+                    }).always(function(response) {
+                        console.log(response);
+                    });
+                }
+            });
+        });
+    </script>
 {% endblock %}
