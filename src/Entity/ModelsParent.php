@@ -16,6 +16,12 @@ class ModelsParent
     #[ORM\Column(name: "parentModelId")]
     private int $parentModelId;
 
+    public function __construct(int $modelId, int $parentId)
+    {
+        $this->modelId = $modelId;
+        $this->parentModelId = $parentId;
+    }
+
     public function getModelId(): int
     {
         return $this->modelId;

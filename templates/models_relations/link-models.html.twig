@@ -25,6 +25,7 @@
     <table class="table datagrid {{ entities is empty ? 'datagrid-empty' }}">
         <thead>
         <tr>
+            <td>Select</td>
             <td>Id</td>
             <td>Name</td>
         </tr>
@@ -32,7 +33,7 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td class="batch-actions-selector">
+                <td class="batch-actions-selector" style="width: 100px;">
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input form-batch-checkbox" value="{{ entity.id }}">
                     </div>
@@ -43,42 +44,16 @@
         {% endfor %}
         </tbody>
     </table>
-{#    <table#}
-{#            id="table"#}
-{#            data-search="true"#}
-{#            data-show-columns="true"#}
-{#            data-click-to-select="true"#}
-{#            data-minimum-count-columns="2"#}
-{#            data-show-pagination-switch="true"#}
-{#            data-pagination="true"#}
-{#            data-id-field="id"#}
-{#            data-page-list="[10, 25, 50, 100, all]"#}
-{#            data-show-footer="true"#}
-{#            data-side-pagination="server"#}
-{#            data-url="{{ path('routePath', {action: 'records', entity: models}) }}">#}
-{#    </table>#}
-
-
-{#    <script src="{{ asset('/assets/bootstrap-datatable/bootstrap-table.js') }}"></script>#}
-{#    #}{#<script src="{{ asset('/assets/bootstrap-datatable/bootstrap-table.js') }}"></script>#}
-
-{#    <script>#}
-{#        $(document).ready(function() {#}
-{#            let $table = $('#table');#}
-
-{#            $table.bootstrapTable('destroy').bootstrapTable({#}
-{#                height: 550,#}
-{#                columns: []#}
-{#            })#}
-{#        });#}
-{#    </script>#}
+    <br>
+    <span id="showError" style="color: red"></span>
 
     <script src="{{ asset('/assets/js/jquery-3.6.3.min.js') }}"></script>
     <script type="application/javascript">
         $(document).ready(function() {
 
             $('#btnSave').click(function() {
-
+                let spanError = $('#showError');
+                spanError.hide();
                 let length = $('.form-check-input:checkbox:checked').length;
                 if (length < 1) {
                     //alert something
@@ -93,14 +68,15 @@
                     let url = "{{ path('app_models_set_relation', {'parentId': 'parentId', 'childId': modelId}) }}";
                     url = url.replace("parentId", parentId);
                     console.log(url);
-                    // personal note: one model must have only 1 parent, filter this for showing the action to ink a model to a parent
                     $.ajax({
                         method: "POST",
                         url: url
                     }).done(function() {
                         console.log('success');
-                    }).fail(function() {
-                        console.log('error');
+                        //redirect to models relations page
+                    }).fail(function(response) {
+                        spanError.text(response.responseJSON.msg);
+                        spanError.show();
                     }).always(function(response) {
                         console.log(response);
                     });

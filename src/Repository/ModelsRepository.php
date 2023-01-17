@@ -39,20 +39,20 @@ class ModelsRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Models[] Returns an array of Models objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('m.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Models[]
+     */
+    public function findParentCandidates(int $manufacturer, int $modelId): array
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.id != :modelId')
+            ->andWhere('m.herst = :manufacturer')
+            ->setParameter('modelId', $modelId)
+            ->setParameter('manufacturer', $manufacturer)
+            ->orderBy('m.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
 //    public function findOneBySomeField($value): ?Models
 //    {

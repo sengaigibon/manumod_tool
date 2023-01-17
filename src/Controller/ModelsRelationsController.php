@@ -30,20 +30,18 @@ class ModelsRelationsController extends AbstractController
     #[Route('/models/relations/link/{modelId}/{modelName}/{manufacturerId}', name: 'app_models_link_models')]
     public function linkModels(ModelsRepository $repo, int $modelId, string $modelName, int $manufacturerId, string $manufacturer): Response
     {
-
         return $this->render('models_relations/link-models.html.twig', [
             'modelId' => $modelId,
             'modelName' => $modelName,
             'manufacturer' => $manufacturer,
-            'entities' => $repo->findBy(['herst' => $manufacturerId], ['id' => 'asc']),
+            'entities' => $repo->findParentCandidates($manufacturerId, $modelId),
         ]);
     }
 
     #[Route('/models/relations/unlink/{parentId}/{childId}', name: 'app_models_delete_link')]
-    public function unlinkModels(ManagerRegistry $registry, AdminUrlGenerator $generator, int $parentId, int $childId): Response
+    public function unlinkModels(ModelsParentRepository $repo, AdminUrlGenerator $generator, int $parentId, int $childId): Response
     {
         if ($parentId > 0 && $childId > 0) {
-            $repo = new ModelsParentRepository($registry);
             $relation = $repo->findOneBy([
                 'modelId' => $childId,
                 'parentModelId' => $parentId,
@@ -62,11 +60,32 @@ class ModelsRelationsController extends AbstractController
     }
 
     #[Route('/models/relations/link/{parentId}/{childId}', name: 'app_models_set_relation')]
-    public function setRelation(int $parentId, int $childId): Response
+    public function setRelation(ModelsParentRepository $repo, int $parentId, int $childId): Response
     {
         //validate selected model does not have already a parent
+        $record = $repo->findOneBy(['modelId' => $childId]);
+        if (!empty($record)) {
+            $body = [
+                'status' => 'error',
+                'msg' => 'Model already has a parent'
+            ];
+            $status = 500;
+        } else {
+            $modelRelation = new ModelsParent($childId, $parentId);
+            try {
+                $repo->save($modelRelation, true);
+                $body = ['status' => 'ok'];
+                $status = 200;
+            } catch (\Exception $e) {
+                $body = [
+                    'status' => 'error',
+                    'msg' => $e->getMessage()
+                ];
+                $status = 418;
+            }
+        }
 
-        $response = new Response(json_encode(['status' => 'ok']), 202);
+        $response = new Response(json_encode($body), $status);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
