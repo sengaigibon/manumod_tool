@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/manumod_tool.iml" filepath="$PROJECT_DIR$/.idea/manumod_tool.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../okta-app/.idea/okta-app.iml" filepath="$PROJECT_DIR$/../../okta-app/.idea/okta-app.iml" />
-    </modules>
-  </component>
-</project>
