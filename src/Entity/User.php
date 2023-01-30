@@ -7,7 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Table(name: "User")]
+#[ORM\Table(name: "Users")]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, \Serializable
 {
@@ -25,7 +25,7 @@ class User implements UserInterface, \Serializable
     #[ORM\Column(type: Types::TEXT)]
     private ?string $token = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(name: "lastLogin")]
     private ?string $lastLogin = null;
 
     public function getId(): int
@@ -69,7 +69,7 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         return [
             'ROLE_USER'
