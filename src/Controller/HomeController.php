@@ -22,6 +22,12 @@ class HomeController extends AbstractController
         return;
     }
 
+    #[Route('/callback', name: "app_login")]
+    public function callback()
+    {
+        return;
+    }
+
     #[Route('/logout', name: "app_out")]
     public function logout()
     {
