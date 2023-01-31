@@ -16,14 +16,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractDashboardController
 {
-    #[Route('/dashboard', name: 'dashboard_index')]
+    #[Route('/index', name: 'dashboard_index')]
     public function index(): Response
     {
-        return $this->admin();
+        return $this->dashboard();
     }
 
-    #[Route('/admin', name: 'dashboard_admin')]
-    public function admin(): Response
+    #[Route('/dashboard', name: 'dashboard_admin')]
+    public function dashboard(): Response
     {
 
         return $this->render('admin/dashboard.html.twig', [
