@@ -8,24 +8,28 @@
 {% endblock %}
 
 {% block main %}
-    <div>
-        Manufacturers: {{ totalManufacturers }} <br>
-        Models: {{ totalModels }} <br>
+    {{ encore_entry_script_tags('app') }}
+
+    <div class="manu-mod-statistics" style="display: flex">
+        <div class="manufacturers" style="width: 49%">
+            Manufacturers: {{ totalManufacturers }} <br>
+            {{ render_chart(chart) }}
+        </div>
+
+        <div class="manufacturers" style="width: 49%">
+            Models: {{ totalModels }} <br>
+            {{ render_chart(chart) }}
+        </div>
     </div>
-{#    <table class="datagrid">#}
-{#        <thead>#}
-{#        <tr>#}
-{#            <td>Some Column</td>#}
-{#            <td>Another Column</td>#}
-{#        </tr>#}
-{#        </thead>#}
-{#        <tbody>#}
-{#        {% for data in myOwnData %}#}
-{#            <tr>#}
-{#                <td>{{ data.col1 }}</td>#}
-{#                <td>{{ data.col2 }}</td>#}
-{#            </tr>#}
-{#        {% endfor %}#}
-{#        </tbody>#}
-{#    </table>#}
+    <br><br><br>
+    <div class="user-statistics" style="display: flex">
+        <div class="users-data-1" style="width: 49%">
+            Last user login: Javier, 2023-01-31 17:45<br>
+        </div>
+
+        <div class="users-data-1" style="width: 49%">
+            Audit data <br>
+        </div>
+        <br>
+    </div>
 {% endblock %}
