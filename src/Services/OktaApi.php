@@ -5,6 +5,9 @@ use Exception;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
+/**
+ * Documentation: https://developer.okta.com
+ */
 class OktaApi
 {
     private SessionInterface $session;
