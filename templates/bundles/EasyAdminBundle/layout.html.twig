@@ -1,0 +1,10 @@
+{% extends '@!EasyAdmin/layout.html.twig' %}
+{% block header_logo %}
+    <div class="top-left logo">
+        <img src="./assets/img/modix-logo.png">
+    </div>
+    <a class="logo" title="{{ ea.dashboardTitle|striptags }}" href="{{ path(ea.dashboardRouteName) }}">
+        <span class="logo-custom">{{ ea.dashboardTitle|raw }}</span>
+        <span class="logo-compact"><i class="fas fa-home"></i></span>
+    </a>
+{% endblock header_logo %}

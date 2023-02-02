@@ -25,6 +25,11 @@
             right: 10px;
             top: 18px;
         }
+        .top-left-logo-dashboard {
+            position: absolute;
+            left: 26px;
+            top: 10px;
+        }
         .full-height {
             height: 70vh;
         }
@@ -58,6 +63,9 @@
 </head>
 <body>
 <div class="flex-center position-ref full-height">
+    <div class="top-left-logo-dashboard">
+        <img src="./assets/img/modix-logo.png" style="width: 140px;">
+    </div>
     <div class="top-right links">
         {% if is_granted('ROLE_USER') %}
             <p>
