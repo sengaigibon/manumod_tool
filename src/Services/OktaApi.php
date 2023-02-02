@@ -7,7 +7,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use GuzzleHttp\Client;
 
 /**
- * Documentation: https://developer.okta.com
+ * Documentation:
+ * https://developer.okta.com
+ * https://developer.okta.com/blog/2019/09/24/how-to-create-a-symfony-app-with-authentication
  */
 class OktaApi
 {
