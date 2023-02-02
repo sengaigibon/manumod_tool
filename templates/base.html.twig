@@ -25,8 +25,13 @@
             right: 10px;
             top: 18px;
         }
+        .top-left-logo-dashboard {
+            position: absolute;
+            left: 26px;
+            top: 10px;
+        }
         .full-height {
-            height: 100vh;
+            height: 70vh;
         }
         .flex-center {
             align-items: center;
@@ -40,7 +45,7 @@
             text-align: center;
         }
         .title {
-            font-size: 84px;
+            font-size: 70px;
         }
         .links > a {
             color: #636b6f;
@@ -58,6 +63,9 @@
 </head>
 <body>
 <div class="flex-center position-ref full-height">
+    <div class="top-left-logo-dashboard">
+        <img src="./assets/img/modix-logo.png" style="width: 140px;">
+    </div>
     <div class="top-right links">
         {% if is_granted('ROLE_USER') %}
             <p>

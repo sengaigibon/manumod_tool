@@ -4,28 +4,32 @@
 {% block content_title %}Dashboard{% endblock %}
 
 {% block page_actions %}
-    <a class="btn btn-primary" href="...">Do somethings</a>
+{#    <a class="btn btn-primary" href="...">Do somethings</a>#}
 {% endblock %}
 
 {% block main %}
-    <div>
-        Manufacturers: {{ totalManufacturers }} <br>
-        Models: {{ totalModels }} <br>
-    </div>
-{#    <table class="datagrid">#}
-{#        <thead>#}
-{#        <tr>#}
-{#            <td>Some Column</td>#}
-{#            <td>Another Column</td>#}
-{#        </tr>#}
-{#        </thead>#}
-{#        <tbody>#}
-{#        {% for data in myOwnData %}#}
-{#            <tr>#}
-{#                <td>{{ data.col1 }}</td>#}
-{#                <td>{{ data.col2 }}</td>#}
-{#            </tr>#}
-{#        {% endfor %}#}
-{#        </tbody>#}
-{#    </table>#}
+    {{ encore_entry_script_tags('app') }}
+    {% if is_granted('ROLE_USER') %}
+        <div class="manu-mod-statistics" style="display: flex; align-items: end;">
+            <div class="manuModChart" style="width: 60%">
+                Manufacturers: {{ totalManufacturers }} <br>
+                Models: {{ totalModels }} <br>
+                {{ render_chart(manuModChart) }}
+            </div>
+            <div class="modTransChart" style="width: 40%">
+                {{ render_chart(modTransChart) }}
+            </div>
+        </div>
+        <br><br><br>
+        <div class="user-statistics" style="display: flex">
+            <div class="users-data-1" style="width: 49%">
+                Last user login: Javier, 2023-01-31 17:45<br>
+            </div>
+
+            <div class="users-data-1" style="width: 49%">
+                Audit data <br>
+            </div>
+            <br>
+        </div>
+    {% endif %}
 {% endblock %}
