@@ -11,6 +11,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, \Serializable
 {
+    public const ROLE_USER = 'ROLE_USER';
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -21,6 +24,9 @@ class User implements UserInterface, \Serializable
 
     #[ORM\Column(length: 190, unique: true)]
     private string $email;
+
+    #[ORM\Column(name: "userRole", length: 50)]
+    private string $userRole;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $token = null;
@@ -102,6 +108,16 @@ class User implements UserInterface, \Serializable
             $this->name,
             $this->email,
             $this->token) = unserialize($serialized);
+    }
+
+    public function getUserRole(): string
+    {
+        return $this->userRole;
+    }
+
+    public function setUserRole(string $userRole = self::ROLE_USER): void
+    {
+        $this->userRole = $userRole;
     }
 
 
