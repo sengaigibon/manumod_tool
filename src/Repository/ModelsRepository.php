@@ -59,9 +59,23 @@ class ModelsRepository extends ServiceEntityRepository
     public function findModelsCountByManufacturer(): array
     {
         $connection = $this->getEntityManager()->getConnection();
-        return $connection
-            ->prepare("select h.name, count(mkm.id) as 'modelsCount' 
-from mdx_kfz_herst h join mdx_kfz_models mkm on h.id = mkm.herst 
-group by h.id order by modelsCount desc limit 15;")->executeQuery()->fetchAllAssociative();
+        return $connection->prepare("select h.name, count(mkm.id) as 'modelsCount' 
+            from mdx_kfz_herst h join mdx_kfz_models mkm on h.id = mkm.herst 
+            group by h.id order by modelsCount desc limit 15")
+            ->executeQuery()
+            ->fetchAllAssociative();
+    }
+
+    public function findModelsCountByTranslations(): array
+    {
+        $connection = $this->getEntityManager()->getConnection();
+        return $connection->prepare("select concat(h.name, ' ', m.name) as name, count(mi.name) as 'modelsCount'
+from mdx_kfz_models m join mdx_kfz_models_i18n mi on m.id = mi.modelId
+    join mdx_kfz_herst h on m.herst = h.id
+group by m.id
+order by modelsCount desc
+limit 5")
+            ->executeQuery()
+            ->fetchAllAssociative();
     }
 }
