@@ -4,9 +4,12 @@ namespace App\Services;
 use Exception;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use GuzzleHttp\Client;
 
 /**
- * Documentation: https://developer.okta.com
+ * Documentation:
+ * https://developer.okta.com
+ * https://developer.okta.com/blog/2019/09/24/how-to-create-a-symfony-app-with-authentication
  */
 class OktaApi
 {
@@ -97,11 +100,16 @@ class OktaApi
 
     private function httpRequest(string $url, ?array $params = null): array
     {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        if ($params) {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
+        $client = new Client();
+        try {
+            $response = $client->request('POST', $url, [
+                'form_params' => $params,
+            ]);
+        } catch (Exception $e) {
+            $response['error'] = $e->getMessage();
+            return $response;
         }
-        return json_decode(curl_exec($ch), true);
+
+        return json_decode($response->getBody(), true);
     }
 }

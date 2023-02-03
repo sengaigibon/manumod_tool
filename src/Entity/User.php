@@ -77,9 +77,7 @@ class User implements UserInterface, \Serializable
 
     public function getRoles(): array
     {
-        return [
-            'ROLE_USER'
-        ];
+        return [$this->getUserRole()];
     }
 
     public function getLastLogin(): string
@@ -123,8 +121,7 @@ class User implements UserInterface, \Serializable
 
     public function getUserIdentifier(): string
     {
-        // TODO: Implement getUserIdentifier() method.
-        return '';
+        return $this->getName();
     }
 
     public function eraseCredentials()
