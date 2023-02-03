@@ -22,14 +22,12 @@ class HomeController extends AbstractController
     private SessionInterface $session;
     private OktaApi $okta;
     private UserRepository $userRepository;
-    private ChartBuilderInterface $chartBuilder;
 
-    public function __construct(RequestStack $requestStack, OktaApi $okta, UserRepository $repo, ChartBuilderInterface $chartBuilder)
+    public function __construct(RequestStack $requestStack, OktaApi $okta, UserRepository $repo)
     {
         $this->session = $requestStack->getSession();
         $this->okta = $okta;
         $this->userRepository = $repo;
-        $this->chartBuilder = $chartBuilder;
     }
 
     #[Route('/', name: 'app_home', methods: "GET")]
@@ -50,7 +48,7 @@ class HomeController extends AbstractController
      * @throws Exception
      */
     #[Route('/callback', name: "app_callback")]
-    public function callbackq   (Security $security): RedirectResponse
+    public function callback(): RedirectResponse
     {
         $token = $this->okta->authorizeUser();
 
@@ -77,7 +75,6 @@ class HomeController extends AbstractController
         $token = new UsernamePasswordToken($user, $firewallName, [$user->getUserRole()]);
         $this->container->get('security.token_storage')->setToken($token);
         $this->session->set('_security_' . $firewallName, serialize($token));
-//        $security->login($user);
 
         return $this->redirectToRoute('app_home');
     }

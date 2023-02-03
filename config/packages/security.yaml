@@ -13,6 +13,8 @@ security:
         main:
             lazy: true
             pattern: ^/
+            form_login:
+                login_path: app_login # this forces the user navigation to the login route when authorization is required
             logout:
                 path: app_logout
 
