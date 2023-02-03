@@ -14,8 +14,6 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Services\OktaApi;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 
 class HomeController extends AbstractController
 {
