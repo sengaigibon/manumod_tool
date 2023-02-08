@@ -19,8 +19,8 @@ security:
                 path: app_logout
 
     access_control:
-         - { path: ^/dashboard, roles: ROLE_USER }
-         - { path: ^/index, roles: ROLE_USER }
+         - { path: ^/dashboard, roles: [ROLE_USER, ROLE_ADMIN] }
+         - { path: ^/index, roles: [ROLE_USER, ROLE_ADMIN] }
 #         - { path: ^/index, roles: ROLE_ADMIN }
 
 when@test:

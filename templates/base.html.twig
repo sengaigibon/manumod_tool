@@ -67,7 +67,7 @@
         <img src="./assets/img/modix-logo.png" style="width: 140px;">
     </div>
     <div class="top-right links">
-        {% if is_granted('ROLE_USER') %}
+        {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
             <p>
                 Logged in as {{ app.user.email }}<br>
                 <a href="{{ path('app_logout') }}">Logout</a>
