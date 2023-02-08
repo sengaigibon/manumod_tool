@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% if is_granted('ROLE_USER') %}
+    {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
         <div class="links">
             <a href="{{ path('dashboard_index') }}">Dashboard</a>
         </div>

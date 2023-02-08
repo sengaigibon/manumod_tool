@@ -31,7 +31,6 @@ class AuditLogger
         $log->setAction($action);
         $log->setEventData($eventData);
         $log->setUser($user);
-        $log->setRequestRoute($request->get('_route'));
         $log->setIpAddress($request->getClientIp());
         $log->setCreatedAt(new \DateTimeImmutable);
         $this->em->persist($log);

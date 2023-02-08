@@ -17,6 +17,11 @@ class ModelsRelationsCrudController extends AbstractCrudController
         return ModelsRelations::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud->setPageTitle('index', 'Models & Relations');
+    }
+
     public function configureActions(Actions $actions): Actions
     {
         $customDelete = Action::new('linkModels', 'Delete')
