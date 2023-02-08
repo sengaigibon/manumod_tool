@@ -25,8 +25,10 @@ class AuditLog
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'id')]
     #[ORM\JoinColumn(name: 'userId', referencedColumnName: 'id')]
-//    #[ORM\ManyToOne]
     private ?User $user = null;
+
+    #[ORM\Column(name: "userId")]
+    private ?int $userId = null;
 
     #[ORM\Column(name: "action", length: 255)]
     private ?string $action = null;

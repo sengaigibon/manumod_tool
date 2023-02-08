@@ -34,6 +34,11 @@ class User implements UserInterface, \Serializable
     #[ORM\Column(name: "lastLogin")]
     private ?string $lastLogin = null;
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     public function getId(): int
     {
         return $this->id;
