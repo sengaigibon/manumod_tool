@@ -18,3 +18,6 @@ alter table AuditLog
     add constraint AuditLog_pk
         primary key (id);
 
+alter table AuditLog
+    drop column requestRoute;
+

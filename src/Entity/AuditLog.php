@@ -31,9 +31,6 @@ class AuditLog
     #[ORM\Column(name: "action", length: 255)]
     private ?string $action = null;
 
-    #[ORM\Column(name: "requestRoute", length: 255, nullable: true)]
-    private ?string $requestRoute = null;
-
     #[ORM\Column(name: "eventData")]
     private array $eventData = [];
 
@@ -100,20 +97,9 @@ class AuditLog
         return $this;
     }
 
-    public function getRequestRoute(): ?string
+    public function getEventData(): string
     {
-        return $this->requestRoute;
-    }
-
-    public function setRequestRoute(?string $requestRoute): AuditLog
-    {
-        $this->requestRoute = $requestRoute;
-        return $this;
-    }
-
-    public function getEventData(): array
-    {
-        return $this->eventData;
+        return json_encode($this->eventData);
     }
 
     public function setEventData(array $eventData): AuditLog
