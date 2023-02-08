@@ -7,17 +7,11 @@
 {% endblock %}
 
 {% block main %}
-    {% set sort_field_name = app.request.get('sort')|keys|first %}
-    {% set sort_order = app.request.get('sort')|first %}
-    {% set has_footer = entities|length != 0 %}
-    {% set num_results = entities|length %}
-
-
     <div>
         Selected Model is: <br>
-        Manufacturer: {{ manufacturer }}<br>
-        ID: {{ modelId }} <br>
-        Name: {{ modelName }} <br>
+        <b>Manufacturer:</b> {{ manufacturer }}<br>
+        <b>ID:</b> {{ modelId }} <br>
+        <b>Name:</b> {{ modelName }} <br>
     </div>
     <br><br>
     Choose the new Parent for the selected Model: <br><br>
