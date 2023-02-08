@@ -28,13 +28,18 @@ class ModelsRelationsController extends AbstractController
     }
 
     #[Route('/models/relations/link/{modelId}/{modelName}/{manufacturerId}', name: 'app_models_link_models')]
-    public function linkModels(ModelsRepository $repo, int $modelId, string $modelName, int $manufacturerId, string $manufacturer): Response
+    public function linkModels(ModelsRepository $repo, AdminUrlGenerator $generator, int $modelId, string $modelName, int $manufacturerId, string $manufacturer): Response
     {
+        $url = $generator->setController(ModelsRelationsCrudController::class)
+            ->setAction(Action::INDEX)
+            ->generateUrl();
+
         return $this->render('models_relations/link-models.html.twig', [
             'modelId' => $modelId,
             'modelName' => $modelName,
             'manufacturer' => $manufacturer,
             'entities' => $repo->findParentCandidates($manufacturerId, $modelId),
+            'redirectUrl' => $url,
         ]);
     }
 
@@ -63,25 +68,34 @@ class ModelsRelationsController extends AbstractController
     public function setRelation(ModelsParentRepository $repo, int $parentId, int $childId): Response
     {
         //validate selected model does not have already a parent
-        $record = $repo->findOneBy(['modelId' => $childId]);
-        if (!empty($record)) {
+        $hasParent = $repo->findOneBy(['modelId' => $childId]);
+        if (!empty($hasParent)) {
             $body = [
                 'status' => 'error',
-                'msg' => 'Model already has a parent'
+                'msg' => 'Model already has a parent, model Id: ' . $hasParent->getParentModelId(),
             ];
             $status = 500;
         } else {
-            $modelRelation = new ModelsParent($childId, $parentId);
-            try {
-                $repo->save($modelRelation, true);
-                $body = ['status' => 'ok'];
-                $status = 200;
-            } catch (\Exception $e) {
+            $isParent = $repo->findOneBy(['parentModelId' => $childId]);
+            if (!empty($isParent)) {
                 $body = [
                     'status' => 'error',
-                    'msg' => $e->getMessage()
+                    'msg' => 'Model is a parent, model Id: ' . $childId,
                 ];
-                $status = 418;
+                $status = 500;
+            } else {
+                $modelRelation = new ModelsParent($childId, $parentId);
+                try {
+                    $repo->save($modelRelation, true);
+                    $body = ['status' => 'ok'];
+                    $status = 200;
+                } catch (\Exception $e) {
+                    $body = [
+                        'status' => 'error',
+                        'msg' => $e->getMessage()
+                    ];
+                    $status = 418;
+                }
             }
         }
 
