@@ -66,7 +66,7 @@ class AuditSubscriber implements EventSubscriberInterface
         }
         $entityId = $entity->getId();
         $entityType = str_replace('App\Entity\\', '', $entityClass);
-        // The Doctrine unit of work keeps track of all changes made to entities.
+
         $uow = $em->getUnitOfWork();
         if ($action === 'delete') {
             // For deletions, we get our entity from the temporary array.
@@ -74,7 +74,7 @@ class AuditSubscriber implements EventSubscriberInterface
             $entityId = $entityData['id'];
         } elseif ($action === 'insert') {
             // For insertions, we convert the entity to an array.
-            $entityData = $this->serilizer->normalize($entity);
+            $entityData = $this->serializer->normalize($entity);
         } else {
             // For updates, we get the change set from Doctrine's Unit of Work manager.
             // This gives an array which contains only the fields which have

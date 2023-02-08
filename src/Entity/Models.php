@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ModelsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Table(name: "mdx_kfz_models")]
 #[ORM\Entity(repositoryClass: ModelsRepository::class)]
@@ -14,6 +15,7 @@ class Models
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Ignore]
     #[ORM\ManyToOne(targetEntity: Manufacturer::class, inversedBy: 'id')]
     #[ORM\JoinColumn(name: 'herst', referencedColumnName: 'id')]
     private Manufacturer $herst;
@@ -80,5 +82,16 @@ class Models
         $this->ident_code = $ident_code;
 
         return $this;
+    }
+
+    public function __serialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'manufacturerId' => $this->herst->getId(),
+            'manufacturerName' => $this->herst->getName(),
+            'name' => $this->name,
+            'ident_code' => $this->ident_code,
+        ];
     }
 }
