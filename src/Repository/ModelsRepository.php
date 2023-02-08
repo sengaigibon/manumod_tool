@@ -78,4 +78,11 @@ limit 5")
             ->executeQuery()
             ->fetchAllAssociative();
     }
+
+    public function findLast(int $limit): ?array
+    {
+        return $this->createQueryBuilder('a')->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 }

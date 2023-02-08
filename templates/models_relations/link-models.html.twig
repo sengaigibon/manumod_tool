@@ -13,6 +13,8 @@
         <b>ID:</b> {{ modelId }} <br>
         <b>Name:</b> {{ modelName }} <br>
     </div>
+    <br>
+    <span id="showError" style="color: red"></span>
     <br><br>
     Choose the new Parent for the selected Model: <br><br>
 
@@ -39,7 +41,6 @@
         </tbody>
     </table>
     <br>
-    <span id="showError" style="color: red"></span>
 
     <script src="{{ asset('/assets/js/jquery-3.6.3.min.js') }}"></script>
     <script type="application/javascript">
@@ -50,14 +51,12 @@
                 spanError.hide();
                 let length = $('.form-check-input:checkbox:checked').length;
                 if (length < 1) {
-                    //alert something
-                    console.log('smaller than 1');
+                    spanError.text('First select a model');
+                    spanError.show();
                 } else if (length > 1) {
-                    //alert something
-                    console.log('greater than 1');
+                    spanError.text('Select only 1 model');
+                    spanError.show();
                 } else if ( length === 1) {
-                    console.log('equals to 1');
-
                     let parentId = $('.form-check-input:checkbox:checked')[0].value;
                     let url = "{{ path('app_models_set_relation', {'parentId': 'parentId', 'childId': modelId}) }}";
                     url = url.replace("parentId", parentId);
@@ -68,6 +67,7 @@
                     }).done(function() {
                         console.log('success');
                         //redirect to models relations page
+                        window.location.replace('{{ redirectUrl }}');
                     }).fail(function(response) {
                         spanError.text(response.responseJSON.msg);
                         spanError.show();

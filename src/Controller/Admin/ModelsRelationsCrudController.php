@@ -47,7 +47,9 @@ class ModelsRelationsCrudController extends AbstractCrudController
     {
         return [
             TextField::new('manufacturerName'),
+            IntegerField::new('parentId'),
             TextField::new('parentName'),
+            IntegerField::new('childId'),
             TextField::new('modelName'),
         ];
     }

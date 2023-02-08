@@ -21,9 +21,19 @@ class ModelsCrudController extends AbstractCrudController
         return Models::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud->setPageTitle('index', 'Models')
+            ->setEntityLabelInSingular('Model')
+            ->setEntityLabelInPlural('Models');
+    }
+
     public function configureActions(Actions $actions): Actions
     {
-        $linkModels = Action::new('linkModels', 'Link model to parent', 'fa-solid fa-link');
+        $linkModels = Action::new('linkModels', 'Link model to parent', 'fa-solid fa-link')
+            ->displayIf(function ($entity) {
+                return $entity->isOrphan();
+            });
         $linkModels->displayAsLink()->linkToRoute('app_models_link_models',
             function (Models $model): array {
                 return [
@@ -40,10 +50,11 @@ class ModelsCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideWhenCreating(),
+            IdField::new('id')->hideOnForm(),
             AssociationField::new('herst', 'Manufacturer'),
             Field::new('name', 'Model Name'),
             Field::new('ident_code', 'Identification Code'),
+            AssociationField::new('parent', 'Parent Id')->hideOnForm(),
         ];
     }
 }
