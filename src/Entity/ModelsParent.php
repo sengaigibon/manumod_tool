@@ -22,6 +22,16 @@ class ModelsParent
         $this->parentModelId = $parentId;
     }
 
+    public function __toString(): string
+    {
+        return (string) $this->parentModelId;
+    }
+
+    public function getId(): int
+    {
+        return $this->modelId;
+    }
+
     public function getModelId(): int
     {
         return $this->modelId;

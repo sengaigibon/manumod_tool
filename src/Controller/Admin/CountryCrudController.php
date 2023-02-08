@@ -17,7 +17,7 @@ class CountryCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideWhenCreating(),
+            IdField::new('id')->hideOnForm(),
             TextField::new('iso'),
             TextField::new('name', 'Name'),
             TextField::new('name_en', 'English Name'),

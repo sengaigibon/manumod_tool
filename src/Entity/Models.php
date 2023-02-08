@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ModelsRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
@@ -19,6 +20,11 @@ class Models
     #[ORM\ManyToOne(targetEntity: Manufacturer::class, inversedBy: 'id')]
     #[ORM\JoinColumn(name: 'herst', referencedColumnName: 'id')]
     private Manufacturer $herst;
+
+    #[Ignore]
+    #[ORM\OneToOne(targetEntity: ModelsParent::class)]
+    #[ORM\JoinColumn(name: 'id', referencedColumnName: 'modelId', nullable: true)]
+    private ModelsParent|null $parent = null;
 
     #[ORM\Column(length: 100)]
     private ?string $name = null;
@@ -93,5 +99,31 @@ class Models
             'name' => $this->name,
             'ident_code' => $this->ident_code,
         ];
+    }
+
+    public function getParent(): ?ModelsParent
+    {
+        if (!$this->parent) {
+            return null;
+        }
+
+        try {
+            $this->parent->getParentModelId();
+        } catch (\Doctrine\ORM\EntityNotFoundException $e) {
+            return $this->parent = null;
+        }
+
+        return $this->parent;
+    }
+
+    public function setParent(?ModelsParent $parent): Models
+    {
+        $this->parent = $parent;
+        return $this;
+    }
+
+    public function isOrphan(): bool
+    {
+        return empty($this->parent);
     }
 }

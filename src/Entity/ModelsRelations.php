@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Repository\ModelsRelationsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Table(name: 'modelsRelations')]
+#[ORM\Table(name: 'modelsRelations')] //Note: modelsRelations is a view
 #[ORM\Entity(repositoryClass: ModelsRelationsRepository::class)]
 class ModelsRelations
 {
