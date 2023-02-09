@@ -47,7 +47,7 @@ class DashboardController extends AbstractDashboardController
     #[Route('/dashboard', name: 'dashboard_admin')]
     public function dashboard(): Response
     {
-        $data = $this->auditLogRepository->findLast(20);
+        $data = $this->auditLogRepository->findLast(15);
         return $this->render('admin/dashboard.html.twig', [
             'totalManufacturers' => 1982, //todo: get real number
             'totalModels' => 3994, //todo: get real number

@@ -24,7 +24,7 @@ class ModelsRelationsCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        $customDelete = Action::new('linkModels', 'Delete')
+        $customDelete = Action::new('unlinkModels', 'Delete')
             ->displayAsLink()
             ->setCssClass('text-danger')
             ->linkToRoute('app_models_delete_link',
