@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\Admin\ModelsCrudController;
-use App\Controller\Admin\ModelsRelationsCrudController;
+use App\Controller\Admin\ModelRelationCrudController;
 use App\Entity\ModelsParent;
 use App\Repository\ModelsParentRepository;
 use App\Repository\ModelsRepository;
@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ModelsRelationsController extends AbstractController
+class ModelRelationController extends AbstractController
 {
     #[Route('/models/relations', name: 'app_models_relations')]
     public function content(): Response
@@ -53,7 +53,7 @@ class ModelsRelationsController extends AbstractController
             }
         }
 
-        $url = $generator->setController(ModelsRelationsCrudController::class)
+        $url = $generator->setController(ModelRelationCrudController::class)
             ->setAction(Action::INDEX)
             ->generateUrl();
 

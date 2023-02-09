@@ -10,7 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
-class ModelsRelationsCrudController extends AbstractCrudController
+class ModelRelationCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
