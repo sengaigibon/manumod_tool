@@ -2,17 +2,13 @@
 
 namespace App\Controller;
 
+use App\Controller\Admin\ModelsCrudController;
 use App\Controller\Admin\ModelsRelationsCrudController;
 use App\Entity\ModelsParent;
-use App\Entity\ModelsRelations;
 use App\Repository\ModelsParentRepository;
-use App\Repository\ModelsRelationsRepository;
 use App\Repository\ModelsRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,7 +26,7 @@ class ModelsRelationsController extends AbstractController
     #[Route('/models/relations/link/{modelId}/{modelName}/{manufacturerId}', name: 'app_models_link_models')]
     public function linkModels(ModelsRepository $repo, AdminUrlGenerator $generator, int $modelId, string $modelName, int $manufacturerId, string $manufacturer): Response
     {
-        $url = $generator->setController(ModelsRelationsCrudController::class)
+        $url = $generator->unsetAll()->setController(ModelsCrudController::class)
             ->setAction(Action::INDEX)
             ->generateUrl();
 
@@ -39,7 +35,7 @@ class ModelsRelationsController extends AbstractController
             'modelName' => $modelName,
             'manufacturer' => $manufacturer,
             'entities' => $repo->findParentCandidates($manufacturerId, $modelId),
-            'redirectUrl' => $url,
+            'redirectUrl' => urlencode($url),
         ]);
     }
 
@@ -80,7 +76,7 @@ class ModelsRelationsController extends AbstractController
             if (!empty($isParent)) {
                 $body = [
                     'status' => 'error',
-                    'msg' => 'Model is a parent, model Id: ' . $childId,
+                    'msg' => 'Model can not be linked as it\'s a parent of other models.',
                 ];
                 $status = 500;
             } else {
