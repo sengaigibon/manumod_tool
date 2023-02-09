@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\ModelsRelations;
+use App\Entity\ModelRelation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<ModelsRelations>
+ * @extends ServiceEntityRepository<ModelRelation>
  *
- * @method ModelsRelations|null find($id, $lockMode = null, $lockVersion = null)
- * @method ModelsRelations|null findOneBy(array $criteria, array $orderBy = null)
- * @method ModelsRelations[]    findAll()
- * @method ModelsRelations[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ModelRelation|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ModelRelation|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ModelRelation[]    findAll()
+ * @method ModelRelation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class ModelsRelationsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ModelsRelations::class);
+        parent::__construct($registry, ModelRelation::class);
     }
 
-    public function save(ModelsRelations $entity, bool $flush = false): void
+    public function save(ModelRelation $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class ModelsRelationsRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(ModelsRelations $entity, bool $flush = false): void
+    public function remove(ModelRelation $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class ModelsRelationsRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return ModelsRelations[] Returns an array of ModelsRelations objects
+//     * @return ModelRelation[] Returns an array of ModelRelation objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class ModelsRelationsRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?ModelsRelations
+//    public function findOneBySomeField($value): ?ModelRelation
 //    {
 //        return $this->createQueryBuilder('m')
 //            ->andWhere('m.exampleField = :val')

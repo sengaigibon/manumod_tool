@@ -6,7 +6,7 @@ use App\Entity\AuditLog;
 use App\Entity\Manufacturer;
 use App\Entity\Models;
 use App\Entity\ModelsI18n;
-use App\Entity\ModelsRelations;
+use App\Entity\ModelRelation;
 use App\Entity\User;
 use App\Repository\AuditLogRepository;
 use App\Repository\ModelsRepository;
@@ -70,7 +70,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Models', 'fa fa-car')->setSubItems([
             MenuItem::linkToCrud('List', 'fa-solid fa-car-side', Models::class),
             MenuItem::linkToCrud('Translations', 'fa-solid fa-language', ModelsI18n::class),
-            MenuItem::linkToCrud('Relations', 'fa-solid fa-people-roof', ModelsRelations::class),
+            MenuItem::linkToCrud('Relations', 'fa-solid fa-people-roof', ModelRelation::class),
         ]);
         yield MenuItem::linkToCrud('Users', 'fa-solid fa-users', User::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Audit Log', 'fa-solid fa-fingerprint', AuditLog::class)->setPermission('ROLE_ADMIN');
