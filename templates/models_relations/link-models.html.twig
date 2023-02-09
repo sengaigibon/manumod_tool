@@ -2,7 +2,12 @@
 
 {% block content_title %}Link Model to a Model Series{% endblock %}
 
+{% set url = ea_url()
+    .setController('App\\Controller\\Admin\\ModelsCrudController')
+    .setAction('index') %}
+
 {% block page_actions %}
+    <a id="btnBack" class="btn btn-secundary" href="{{url}}">Back</a>
     <a id="btnSave" class="btn btn-primary" href="#">Save</a>
 {% endblock %}
 
@@ -67,7 +72,7 @@
                     }).done(function() {
                         console.log('success');
                         //redirect to models relations page
-                        window.location.replace('{{ redirectUrl }}');
+                        window.location.replace(decodeURIComponent('{{ redirectUrl }}'));
                     }).fail(function(response) {
                         spanError.text(response.responseJSON.msg);
                         spanError.show();
