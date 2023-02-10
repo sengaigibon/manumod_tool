@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\AuditLog;
 use App\Entity\Manufacturer;
+use App\Entity\ModelCountriesRelation;
 use App\Entity\Models;
 use App\Entity\ModelsI18n;
 use App\Entity\ModelRelation;
@@ -70,7 +71,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Models', 'fa fa-car')->setSubItems([
             MenuItem::linkToCrud('List', 'fa-solid fa-car-side', Models::class),
             MenuItem::linkToCrud('Translations', 'fa-solid fa-language', ModelsI18n::class),
-            MenuItem::linkToCrud('Relations', 'fa-solid fa-people-roof', ModelRelation::class),
+            MenuItem::linkToCrud('Model Relations', 'fa-solid fa-people-roof', ModelRelation::class),
+            MenuItem::linkToCrud('Country Relations', 'fa-solid fa-earth-europe', ModelCountriesRelation::class),
         ]);
         yield MenuItem::linkToCrud('Users', 'fa-solid fa-users', User::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Audit Log', 'fa-solid fa-fingerprint', AuditLog::class)->setPermission('ROLE_ADMIN');
