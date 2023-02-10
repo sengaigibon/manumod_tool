@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'modelsRelations')] //Note: modelsRelations is a view
 #[ORM\Entity(repositoryClass: ModelsRelationsRepository::class)]
-class ModelsRelations
+class ModelRelation
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

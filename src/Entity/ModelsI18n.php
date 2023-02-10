@@ -15,7 +15,7 @@ class ModelsI18n
 
     #[ORM\ManyToOne(targetEntity: Country::class, inversedBy: 'id')]
     #[ORM\JoinColumn(name: 'countryid', referencedColumnName: 'id')]
-    private Country|null $countryid = null;
+    private Country|null $countryId = null;
 
     #[ORM\ManyToOne(targetEntity: Language::class, inversedBy: 'id')]
     #[ORM\JoinColumn(name: 'languageid', referencedColumnName: 'id')]
@@ -41,12 +41,12 @@ class ModelsI18n
 
     public function getCountryId(): ?Country
     {
-        return $this->countryid;
+        return $this->countryId;
     }
 
     public function setCountryId(?Country $countryId): self
     {
-        $this->countryid = $countryId;
+        $this->countryId = $countryId;
 
         return $this;
     }

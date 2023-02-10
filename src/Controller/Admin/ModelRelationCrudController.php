@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\ModelsRelations;
+use App\Entity\ModelRelation;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -10,11 +10,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
-class ModelsRelationsCrudController extends AbstractCrudController
+class ModelRelationCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return ModelsRelations::class;
+        return ModelRelation::class;
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -28,7 +28,7 @@ class ModelsRelationsCrudController extends AbstractCrudController
             ->displayAsLink()
             ->setCssClass('text-danger')
             ->linkToRoute('app_models_delete_link',
-            function (ModelsRelations $modelRelation): array {
+            function (ModelRelation $modelRelation): array {
                 return [
                     'parentId' => $modelRelation->getParentId(),
                     'childId' => $modelRelation->getChildId(),

@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ModelsRepository;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Ignore;
 
@@ -31,6 +30,11 @@ class Models
 
     #[ORM\Column(length: 80)]
     private ?string $ident_code = null;
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     public function setId(int $id): self
     {

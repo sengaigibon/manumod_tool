@@ -1,0 +1,58 @@
+{% extends '@!EasyAdmin/crud/new.html.twig' %}
+{% set controllerName = app.request.attributes.get("_controller")[0] %}
+
+{% block head_javascript %}
+    {{ parent() }}
+    <script src="{{ asset('/assets/js/jquery-3.6.3.min.js') }}"></script>
+    <script type="application/javascript">
+        $(document).ready(function() {
+            $('#btnSave').click(function() {
+                let spanError = $('#showError');
+                spanError.hide();
+
+                let model = $('#ModelCountriesRelation_model').val();
+                if (model === undefined || model.length === 0) {
+                    spanError.text('Field Model can not be empty');
+                    spanError.show();
+                    return;
+                }
+
+                let countries = $('#ModelCountriesRelation_country').val();
+                if (countries === undefined || countries.length === 0) {
+                    spanError.text('Field Country can not be empty');
+                    spanError.show();
+                    return;
+                }
+
+                let allCountries = $('#ModelCountriesRelation_allCountries').val();
+                let url = "{{ path('app_model_countries_relation_create',
+                    {'modelId': 'model_param', 'countries': 'countries_param', 'allCountries': 'allCountries'}) }}";
+                url = url.replace("model_param", model).replace('countries_param', countries).replace('allCountries', allCountries);
+                console.log(url);
+
+                $.ajax({
+                    method: "POST",
+                    url: url
+                }).done(function() {
+                    console.log('success');
+                    {#window.location.replace(decodeURIComponent('{{ url }}'));#}
+                }).fail(function(response) {
+                    spanError.text(response.responseJSON.msg);
+                    spanError.show();
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block page_actions %}
+    {{ parent() }}
+    <a id="btnSave" class="btn btn-primary" href="#">Save</a>
+{% endblock %}
+
+{% block main %}
+    {% block new_form %}
+        {{ form(new_form) }}
+        <span id="showError" style="color: red"></span>
+    {% endblock new_form %}
+{% endblock %}
