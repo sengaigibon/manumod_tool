@@ -86,10 +86,7 @@ class ModelRelationController extends AbstractController
                     $body = ['status' => 'ok'];
                     $status = 200;
                 } catch (\Exception $e) {
-                    $body = [
-                        'status' => 'error',
-                        'msg' => $e->getMessage()
-                    ];
+                    $body = ['status' => 'error', 'msg' => $e->getMessage()];
                     $status = 418;
                 }
             }
